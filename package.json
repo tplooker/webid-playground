@@ -1,0 +1,16 @@
+{
+  "name": "webid-playground",
+  "version": "0.0.1",
+  "scripts": {
+    "start:ngrok": "ngrok http 3000",
+    "start:server": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ngrok": "^3.3.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

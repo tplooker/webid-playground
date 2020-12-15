@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebID Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified Materialize JS/CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="card-panel">
+    <h5>Web ID Demo</h5>
+      <p>
+        Click the following button to try WebID
+      </p>
+      <a class="waves-effect waves-light btn" id="loginButton">Login</a>
+    </div>
+</div>
+
+<script>
+  function onDocumentReady(fn) {
+    if(document.readyState !== 'loading') {
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+
+  async function login() {
+      // Feature detection.
+    if (!navigator.id) {
+        console.log("WebID is not available.");
+        return;
+    }
+    
+    try {
+        // TODO replace the URL below
+        const url = 'https://c917d35e879b.ngrok.io';
+        console.log("Hitting IDP well known: " + url + "/.well-known/webid");
+
+        const token = await navigator.id.get({
+            provider: url,
+            request: "client_id=1234&nonce=Ct60bD&response_type=code&scope=email openid profile",
+        });
+
+        console.log(token);
+
+    } catch (e) {
+        console.log(`rejected with ${e}`);
+    }
+  }
+
+  onDocumentReady(() => {
+    document.getElementById('loginButton').addEventListener('click', login);
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
